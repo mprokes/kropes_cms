@@ -1,7 +1,7 @@
 <?php
 /**
 Plugin Name: Kropes CMS
-Version: 0.3.1
+Version: 0.3.2
 Author: Michal Prokeš
 Author URI: http://michalprokes.cz
 */
