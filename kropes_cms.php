@@ -46,17 +46,30 @@ class Kropes_cms{
 
 		add_filter('user_contactmethods',array(&$this,'extend_author_profile'),2,1);
 
+		add_shortcode( 'kropes_author_box' , array(&$this,'author_box') );
+
 		if($this->admin_footer_text) add_filter('admin_footer_text', array(&$this,'admin_footer_text'));
 
 		add_filter('login_headertitle', array(&$this,'login_headertitle'));  
 		if($this->login_headerurl) add_filter('login_headerurl', array(&$this,'login_headerurl'));  
+
+		if(is_admin()){
+  			remove_action("admin_color_scheme_picker", "admin_color_scheme_picker");
+		}
+
+
 	}
 
 
+	/**
+	 * Customize User profile admin page
+	 */
 	function extend_author_profile( $fields )
 	{
 		$fields['phone'] = 'Telefon';
 		$fields['company_function'] = 'Funkce ve firmě';
+		unset($fields['aim']);
+		unset($fields['yim']);
 		return $fields;
 	}
 
@@ -231,6 +244,26 @@ class Kropes_cms{
 		foreach($cols AS $c){
 			echo "<div class='".$colclass."'><ul>".$c."</ul></div>";
 		}
+	}
+
+
+
+	function author_box( $atts ){
+	  global $post;
+
+	  $author = $atts["id"]>0 ? $atts["id"] : $post->post_author;
+
+          $ret = "<div class='kropes_author_box wrapper'>";
+	  if(!$atts["noavatar"]){
+	    $ret .= "<div class='avatar'>".get_avatar($author)."</div>";
+          }
+	  $ret .= "<div class='display_name'>".get_the_author_meta( "display_name",$author)."</div>";
+	  $ret .= "<div class='company_function'>".get_the_author_meta( "company_function",$author)."</div>";
+	  $ret .= "<div class='phone'>".get_the_author_meta( "phone",$author)."</div>";
+
+          $ret .= "</div>";
+
+	  return $ret;
 	}
 	      
 
