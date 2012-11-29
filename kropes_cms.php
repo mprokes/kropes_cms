@@ -67,6 +67,7 @@ class Kropes_cms{
 	function extend_author_profile( $fields )
 	{
 		$fields['phone'] = 'Telefon';
+		$fields['mobile'] = 'Mobil';
 		$fields['company_function'] = 'Funkce ve firmě';
 		unset($fields['aim']);
 		unset($fields['yim']);
@@ -127,9 +128,9 @@ class Kropes_cms{
 
 		$n = (array)$this->posts_menu_label;
 
-		$menu[5][0] = $n[name];
-		if($n[name]) $submenu['edit.php'][5][0] = __('Všechny').' '.$n[name];
-		if($n[add_new]) $submenu['edit.php'][10][0] = $n[add_new];
+		$menu[5][0] = $n['name'];
+		if($n['name']) $submenu['edit.php'][5][0] = __('Všechny').' '.$n['name'];
+		if($n['add_new']) $submenu['edit.php'][10][0] = $n['add_new'];
 		echo '';
 	}
 
